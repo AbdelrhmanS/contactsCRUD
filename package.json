@@ -1,0 +1,33 @@
+{
+  "name": "contacts",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "gulp && tsc; node dist/app.js",
+    "debug": "gulp && tsc; node --inspect=5990 dist/app.js",
+    "debug-brk": "gulp && tsc; node --inspect-brk=5990 dist/app.js",
+    "test": "gulp && mocha --reporter spec 'dist/**/*.test.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "compression": "^1.7.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "mysql": "github:mysqljs/mysql",
+    "promise-mysql": "^3.3.1"
+  },
+  "devDependencies": {
+    "@tsed/common": "^4.30.1",
+    "@tsed/core": "^4.30.1",
+    "@types/express": "^4.16.0",
+    "@types/mysql": "^2.15.5",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^7.1.0",
+    "typescript": "^2.7.2"
+  }
+}
