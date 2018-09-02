@@ -44,7 +44,7 @@ Server = Server_1 = __decorate([
         mount: {
             [baseRoute]: [
                 `${rootDir}/modules/user/controller/userCtrl.js`,
-                `${rootDir}/modules/job/controller/serviceCtrl.js`,
+                `${rootDir}/modules/department/controller/departmentCtrl.js`,
             ],
         },
         componentsScan: [

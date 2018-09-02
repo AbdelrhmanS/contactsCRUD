@@ -19,27 +19,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@tsed/common");
 const dbConnection_1 = require("../../../common/services/dbConnection");
-let UserService = class UserService {
-    constructor() {
+const userService_1 = require("../../user/services/userService");
+let DepartmentService = class DepartmentService {
+    constructor(userService) {
+        this.userService = userService;
         this.dbConnection = dbConnection_1.default;
     }
-    createUser(username) {
+    createDepartment(departmentName, userId) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                this.dbConnection.query(`INSERT INTO task.user(username) VALUES ("${username}")`, err => {
+                const query = `INSERT INTO task.department(department_name, user_id) VALUES ("${departmentName}", ${userId})`;
+                this.dbConnection.query(query, err => {
                     if (err) {
                         reject(err);
                     }
-                    this.getAllUsers()
-                        .then(results => resolve(results));
+                    this.userService.getUser(userId)
+                        .then((results) => resolve(results));
                 });
             });
         });
     }
-    getAllUsers() {
+    getAllDepartments() {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
-                this.dbConnection.query('SELECT * from task.user', (err, results) => {
+                this.dbConnection.query('SELECT * from task.department', (err, results) => {
                     if (err) {
                         reject(err);
                     }
@@ -48,11 +51,9 @@ let UserService = class UserService {
             });
         });
     }
-    getUser(userId) {
+    getDepartment(departmentId) {
         return new Promise((resolve, reject) => {
-            const query = `SELECT user.id, user.username, department.department_name from user` +
-                ` LEFT JOIN department ON user.id = department.user_id WHERE user.id = ${userId}`;
-            this.dbConnection.query(query, (err, results) => {
+            this.dbConnection.query(`SELECT * from task.department WHERE id = ${departmentId}`, (err, results) => {
                 if (err) {
                     reject(err);
                 }
@@ -60,21 +61,21 @@ let UserService = class UserService {
             });
         });
     }
-    deleteUserById(userId) {
+    deleteDepartmentById(departmentId) {
         return new Promise((resolve, reject) => {
-            this.dbConnection.query(`DELETE FROM task.user WHERE id = ${userId}`, err => {
+            this.dbConnection.query(`DELETE FROM task.department WHERE id = ${departmentId}`, err => {
                 if (err) {
                     reject(err);
                 }
-                this.getAllUsers()
+                this.getAllDepartments()
                     .then(results => resolve(results));
             });
         });
     }
 };
-UserService = __decorate([
+DepartmentService = __decorate([
     common_1.Service(),
-    __metadata("design:paramtypes", [])
-], UserService);
-exports.UserService = UserService;
-//# sourceMappingURL=userService.js.map
+    __metadata("design:paramtypes", [userService_1.UserService])
+], DepartmentService);
+exports.DepartmentService = DepartmentService;
+//# sourceMappingURL=departmentService.js.map

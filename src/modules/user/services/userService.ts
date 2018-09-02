@@ -37,7 +37,9 @@ export class UserService {
 
     getUser(userId: number): Promise<User> {
       return new Promise((resolve, reject) => {
-        this.dbConnection.query(`SELECT * from task.user WHERE id = ${userId}`, (err, results: User) => {
+        const query = `SELECT user.id, user.username, department.department_name from user` +
+          ` LEFT JOIN department ON user.id = department.user_id WHERE user.id = ${userId}`;
+        this.dbConnection.query(query, (err, results: User) => {
           if (err) {
             reject(err);
           }
